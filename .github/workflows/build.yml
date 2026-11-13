@@ -12,9 +12,10 @@ jobs:
           set -e
           mkdir work
           for f in FaceGuard*.zip; do unzip -qo "$f" -d work; done
-          test -f mobilefacenet.tflite || { echo "mobilefacenet.tflite repo me upload karo"; exit 1; }
+          M=$(ls *.tflite 2>/dev/null | head -n 1)
+          test -n "$M" || { echo "koi .tflite file repo me upload karo"; exit 1; }
           mkdir -p work/FaceGuard/app/src/main/assets
-          cp mobilefacenet.tflite work/FaceGuard/app/src/main/assets/
+          cp "$M" work/FaceGuard/app/src/main/assets/mobilefacenet.tflite
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
